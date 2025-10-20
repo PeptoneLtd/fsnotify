@@ -490,13 +490,13 @@ func (w *inotify) handleEvent(inEvent *unix.InotifyEvent, buf *[65536]byte, offs
 			// watch. I have some code for this in my kqueue refactor we can use
 			// in the future. For now I'm okay with this as it's not publicly
 			// available. Correctness first, performance second.
-			if ev.renamedFrom != "" {
+			if ev.RenamedFrom != "" {
 				for k, ww := range w.watches.wd {
 					if k == watch.wd || ww.path == ev.Name {
 						continue
 					}
-					if strings.HasPrefix(ww.path, ev.renamedFrom) {
-						ww.path = strings.Replace(ww.path, ev.renamedFrom, ev.Name, 1)
+					if strings.HasPrefix(ww.path, ev.RenamedFrom) {
+						ww.path = strings.Replace(ww.path, ev.RenamedFrom, ev.Name, 1)
 						w.watches.wd[k] = ww
 					}
 				}
